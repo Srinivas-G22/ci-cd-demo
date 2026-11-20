@@ -26,7 +26,8 @@ def database_url() -> str:
     if not url:
         raise RuntimeError("DATABASE_URL is not set. Put your Neon connection string in .env")
     # Neon gives postgresql://... ; SQLAlchemy needs to be told to use the psycopg driver.
-    return url.replace("postgresql://", "postgresql+psycopg://", 1)
+    url = url.replace("postgresql://", "postgresql+psycopg://", 1)
+    return url.replace("ssl=require", "sslmode=require")
 
 
 @lru_cache
